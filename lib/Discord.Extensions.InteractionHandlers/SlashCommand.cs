@@ -1,6 +1,7 @@
-﻿using Discord.WebSocket;
+﻿using Discord.Extensions.InteractionHandlers.Abstractions;
+using Discord.WebSocket;
 
-namespace Discord.Extensions.InteractionHandlers.Abstractions;
+namespace Discord.Extensions.InteractionHandlers;
 
 public abstract class SlashCommand : ISlashCommand
 {

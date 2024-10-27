@@ -3,7 +3,6 @@ using Discord.Extensions.InteractionHandlers;
 using Discord.Extensions.InteractionHandlers.Abstractions;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
 
 namespace Discord.Extensions;
 
@@ -11,7 +10,7 @@ public static class InteractionExtensions
 {
     public static IServiceCollection AddSlashCommands(
         this IServiceCollection services,
-        Assembly? scanAssembly,
+        Assembly scanAssembly,
         ISlashCommandHandler? handler = null)
     {
         

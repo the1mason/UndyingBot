@@ -1,14 +1,13 @@
 ﻿using Discord;
-using Discord.Extensions.InteractionHandlers.Abstractions;
+using Discord.Extensions.InteractionHandlers;
 using Discord.WebSocket;
-using UndyingBot.Core.Models;
 using UndyingBot.Core.Services;
 
 namespace UndyingBot.Discord.SlashCommands;
 
 public class RemoveQuoteCommand(QuoteService service) : SlashCommand
 {
-    public override string Name => "remvoe-quote";
+    public override string Name => "remove-quote";
     public override string Description => "Удалить цитату (для администраторов)";
 
     public override ValueTask<SlashCommandBuilder> RegisterAsync(SlashCommandBuilder builder)

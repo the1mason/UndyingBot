@@ -6,7 +6,6 @@ using Serilog;
 using UndyingBot.Core;
 using UndyingBot.Discord.SlashCommands;
 
-
 var services = new ServiceCollection();
 
 // config
@@ -15,18 +14,17 @@ var configuration = new ConfigurationBuilder()
     .AddJsonFile("appsettings.Development.json", true)
     .AddJsonFile("appsettings.Secret.json", true)
     .Build();
+
 services.AddSingleton(configuration);
 
-// serilog config
+// logs
 var log = new LoggerConfiguration()
     .ReadFrom.Configuration(configuration)
     .CreateLogger();
 services.AddLogging(builder => builder.AddSerilog(log));
 
-
 // setup slash commands
-services.AddSlashCommands(Assembly.GetAssembly(typeof(QuoteCommand)));
-
+services.AddSlashCommands(Assembly.GetAssembly(typeof(QuoteCommand))!);
 
 services.ConfigureCoreServices(configuration);
 

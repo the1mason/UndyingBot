@@ -18,7 +18,7 @@ public class SlashCommandsHandler(
 
         int count = 0;
 
-        foreach (var command in commands)
+        var registrationTasks = commands.Select(async command =>
         {
             logger.LogDebug("Registering command {CommandName}", command.Name);
             try
@@ -26,15 +26,18 @@ public class SlashCommandsHandler(
                 var builder = new SlashCommandBuilder()
                     .WithName(command.Name)
                     .WithDescription(command.Description);
-                var res = await command.RegisterAsync(builder);
-                await client.CreateGlobalApplicationCommandAsync(res.Build());
-                count++;
+                builder = await command.RegisterAsync(builder);
+                await client.CreateGlobalApplicationCommandAsync(builder.Build());
+                Interlocked.Increment(ref count);
+                logger.LogDebug("Done registering command {CommandName}", command.Name);
             }
             catch (Exception e)
             {
                 logger.LogError(e, "Failed to register command {CommandName}", command.Name);
             }
-        }
+        });
+
+        await Task.WhenAll(registrationTasks);
 
         logger.LogInformation("Registered {Count} slash commands", count);
     }

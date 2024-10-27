@@ -1,5 +1,5 @@
 ﻿using Discord;
-using Discord.Extensions.InteractionHandlers.Abstractions;
+using Discord.Extensions.InteractionHandlers;
 using Discord.WebSocket;
 using UndyingBot.Core.Models;
 using UndyingBot.Core.Services;
