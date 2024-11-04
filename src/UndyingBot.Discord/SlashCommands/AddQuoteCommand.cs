@@ -36,6 +36,7 @@ public class AddQuoteCommand(QuoteService service) : SlashCommand
             Url = url,
             Author = author
         };
+        
         var result = await service.AddQuoteAsync(quote, command.User.Id);
         if(result)
         {
@@ -45,5 +46,7 @@ public class AddQuoteCommand(QuoteService service) : SlashCommand
         {
             await command.RespondAsync("Недостаточно прав", ephemeral:true);
         }
+        
+        await command.FollowupAsync();
     }
 }

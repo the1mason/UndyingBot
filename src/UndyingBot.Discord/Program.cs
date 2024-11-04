@@ -2,6 +2,9 @@ using System.Reflection;
 using Discord;
 using Discord.Extensions;
 using Discord.WebSocket;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Serilog;
 using UndyingBot.Core;
 using UndyingBot.Discord.SlashCommands;
@@ -21,14 +24,21 @@ services.AddSingleton(configuration);
 var log = new LoggerConfiguration()
     .ReadFrom.Configuration(configuration)
     .CreateLogger();
-services.AddLogging(builder => builder.AddSerilog(log));
+
+
+Log.Logger = log;
+
+services.AddLogging(builder =>
+{
+    builder.ClearProviders();
+    builder.AddSerilog(log);
+});
 
 // setup slash commands
 services.AddSlashCommands(Assembly.GetAssembly(typeof(QuoteCommand))!);
 
 services.ConfigureCoreServices(configuration);
 
-Log.Logger = log;
 
 var client = new DiscordSocketClient();
 

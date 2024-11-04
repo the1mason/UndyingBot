@@ -3,16 +3,19 @@ using Discord.Extensions.InteractionHandlers;
 using Discord.Extensions.InteractionHandlers.Abstractions;
 using Discord.WebSocket;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Discord.Extensions;
 
 public static class InteractionExtensions
 {
-    public static IServiceCollection AddSlashCommands(
-        this IServiceCollection services,
+    public static void AddSlashCommands(this IServiceCollection services,
         Assembly scanAssembly,
-        ISlashCommandHandler? handler = null)
+        ISlashCommandHandler? handler = null,
+        SlashCommandHandlerOptions? opts = null)
     {
+        opts ??= new();
+        services.TryAddSingleton(opts);
         
         if(handler is not null)
             services.AddSingleton(handler);
@@ -26,8 +29,6 @@ public static class InteractionExtensions
                 services.AddSingleton(typeof(ISlashCommand) ,type);
             }
         }
-
-        return services;
     }
 
     public static async Task UseSlashCommands(this IServiceProvider provider)

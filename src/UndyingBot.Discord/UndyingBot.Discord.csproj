@@ -5,6 +5,7 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <UserSecretsId>dotnet-UndyingBot.Discord-ae0b9199-dc6c-4c62-9a1f-93b4ad3839f5</UserSecretsId>
+    <ServerGarbageCollection>true</ServerGarbageCollection>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,5 +21,21 @@
   <ItemGroup>
     <ProjectReference Include="..\..\lib\Discord.Extensions.InteractionHandlers\Discord.Extensions.InteractionHandlers.csproj" />
     <ProjectReference Include="..\UndyingBot.Core\UndyingBot.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Remove="logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Remove="logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="logs\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="logs\**" />
   </ItemGroup>
 </Project>
