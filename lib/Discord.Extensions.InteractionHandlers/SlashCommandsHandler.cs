@@ -71,6 +71,7 @@ public class SlashCommandsHandler(
 
     private async Task<int> RegisterGlobalCommands(IEnumerable<ISlashCommand> commands, int count)
     {
+        // todo: to parallel with limited concurrency
         var registrationTasks = commands.Select(async command =>
         {
             logger.LogDebug("Registering command {CommandName}", command.Name);

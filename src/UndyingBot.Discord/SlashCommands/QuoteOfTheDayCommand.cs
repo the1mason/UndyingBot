@@ -11,10 +11,11 @@ public sealed class QuoteOfTheDayCommand(QuoteService service) : SlashCommand
     public override string Description => "Получить цитату дня";
     public override async Task HandleAsync(SocketSlashCommand command)
     {
+        await command.DeferAsync();
         var quote = await service.GetQuoteOfTheDayAsync(command.User.Id);
         if(quote is null)
         {
-            await command.RespondAsync("Цитаты не найдены");
+            await command.ModifyOriginalResponseAsync(props => props.Content = "Цитаты не найдены");
             return;
         }
 
@@ -35,6 +36,6 @@ public sealed class QuoteOfTheDayCommand(QuoteService service) : SlashCommand
             embed = embed.WithImageUrl(quote.Url);
         }
         
-        await command.RespondAsync(embed: embed.Build());
+        await command.ModifyOriginalResponseAsync(props => props.Embed = embed.Build());
     }
 }
