@@ -16,17 +16,17 @@ public static class InteractionExtensions
     {
         opts ??= new();
         services.TryAddSingleton(opts);
-        
-        if(handler is not null)
+
+        if (handler is not null)
             services.AddSingleton(handler);
         else
             services.AddSingleton<ISlashCommandHandler, SlashCommandsHandler>();
-        
+
         foreach (var type in scanAssembly.GetTypes())
         {
             if (type.IsAssignableTo(typeof(ISlashCommand)))
             {
-                services.AddSingleton(typeof(ISlashCommand) ,type);
+                services.AddTransient(typeof(ISlashCommand), type);
             }
         }
     }

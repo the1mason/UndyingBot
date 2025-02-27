@@ -14,6 +14,7 @@ public class RemoveQuoteCommand(QuoteService service) : SlashCommand
     {
         builder.AddOption("url", ApplicationCommandOptionType.String, "Ссылка на цитату", isRequired:false);
         builder.AddOption("text", ApplicationCommandOptionType.String, "Текст цитаты", isRequired:false);
+
         return ValueTask.FromResult(builder);
     }
     public override async Task HandleAsync(SocketSlashCommand command)
